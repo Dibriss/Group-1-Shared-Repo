@@ -21,11 +21,11 @@ import numpy as np
 SIZE = 30
 
 
-def createSpinMatrix():
-  return (2 * np.random.randint(0,2, size=(SIZE, SIZE))) - 1
+def createLattice(size):
+  return (2 * np.random.randint(0,2, size=(size, size))) - 1
 
-def chooseRandomAtom():
-  return (np.random.randint(0, SIZE), np.random.randint(0, SIZE))
+def chooseRandomAtom(size):
+  return (np.random.randint(0, size), np.random.randint(0, size))
 
 def calculateEnergyChange(lattice, position):
   energyChange = 0
@@ -37,3 +37,16 @@ def calculateEnergyChange(lattice, position):
       continue
     adjacentOrientation = lattice[adjacentAtom[0]][adjacentAtom[1]]
     energyChange += (2 * curOrientation * adjacentOrientation)
+  return energyChange
+
+def calculateProbability(dE, temperature):
+  if dE < 0:
+    return 1.0
+  else:
+    p = np.exp(-dE/temperature)
+    return p
+
+def acceptChange(probability):
+  return np.random.random() < probability
+
+
