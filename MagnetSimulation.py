@@ -24,7 +24,8 @@ TEMPERATURES = 20
 
 
 def createLattice(size):
-  return (2 * np.random.randint(0,2, size=(size, size))) - 1
+  # return (2 * np.random.randint(0,2, size=(size, size))) - 1
+  return np.ones((size, size))
 
 def chooseRandomAtom(size):
   return (np.random.randint(0, size), np.random.randint(0, size))
@@ -33,7 +34,7 @@ def calculateEnergyChange(lattice, position):
   energyChange = 0
   curOrientation = lattice[position[0], position[1]]
   for direction in [(1,0),(0,1),(-1,0),(0,-1)]:
-    adjacentAtom = np.add(curOrientation, direction)
+    adjacentAtom = np.add(position, direction)
     if adjacentAtom[0] < 0 or adjacentAtom[1] < 0 or \
         adjacentAtom[0] >= SIZE or adjacentAtom[1] >= SIZE:
       continue
